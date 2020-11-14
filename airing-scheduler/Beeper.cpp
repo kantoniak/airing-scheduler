@@ -1,6 +1,6 @@
 #include "Beeper.hpp"
 
-constexpr size_t BEEP_FREQ = 4000;
+constexpr size_t BEEP_FREQ = 100;
 
 Beeper::Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time) noexcept : pin(pin), beep_time(beep_time), total_time(total_time) {
 }

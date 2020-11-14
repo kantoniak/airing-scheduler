@@ -5,7 +5,7 @@ AiringTimer::AiringTimer(CD4017& cd4017, const size_t airing_time) noexcept : cd
 
 void AiringTimer::start() noexcept {
     this->complete = false;
-    this->cd4017.reset();
+    this->cd4017.turn_on();
     this->working = true;
 
     // Set timer to count upwards
@@ -19,6 +19,7 @@ void AiringTimer::update() noexcept {
 
 void AiringTimer::stop() noexcept {
     timer.cancel();
+    this->cd4017.turn_off();
     this->complete = false;
     this->working = false;
 }
@@ -35,7 +36,7 @@ static bool AiringTimer::timer_update(AiringTimer* airing_timer) noexcept {
     if (airing_timer->cd4017.get_value() == airing_timer->cd4017.get_max_value()) {
         // Countdown complete
         airing_timer->timer.cancel();
-        airing_timer->cd4017.reset();
+        airing_timer->cd4017.turn_off();
         airing_timer->complete = true;
         airing_timer->working = false;
     } else {

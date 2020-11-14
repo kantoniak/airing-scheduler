@@ -8,8 +8,11 @@
 
 class CD4017 {
   public:
-    CD4017(uint8_t clock_pin, uint8_t reset_pin) noexcept;
+    CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin) noexcept;
     void initialize() const noexcept;
+
+    void turn_on() noexcept;
+    void turn_off() noexcept;
 
     void increment() noexcept;
     uint8_t get_value() const noexcept;
@@ -20,7 +23,10 @@ class CD4017 {
   private:
     uint8_t clock_pin;
     uint8_t reset_pin;
+    uint8_t vcc_pin;
     uint8_t value;
+
+    bool power_on;
 
     void send_pulse(uint8_t pin) const noexcept;
 };
