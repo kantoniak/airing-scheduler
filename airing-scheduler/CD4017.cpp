@@ -27,6 +27,10 @@ uint8_t CD4017::get_value() const noexcept {
     return this->value;
 }
 
+uint8_t CD4017::get_max_value() const noexcept {
+    return MAX_VALUE;
+}
+
 void CD4017::set_value(uint8_t value) noexcept {
     if (value > MAX_VALUE) {
         value %= MAX_VALUE;

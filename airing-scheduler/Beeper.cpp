@@ -15,7 +15,7 @@ void Beeper::start() noexcept {
 }
 
 void Beeper::update() noexcept {
-    this->timer.tick();
+    this->timer.tick<void>();
 }
 
 void Beeper::stop() noexcept {

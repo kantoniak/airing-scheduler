@@ -13,6 +13,7 @@ class CD4017 {
 
     void increment() noexcept;
     uint8_t get_value() const noexcept;
+    uint8_t get_max_value() const noexcept;
     void set_value(uint8_t value) noexcept;
     void reset() noexcept;
 

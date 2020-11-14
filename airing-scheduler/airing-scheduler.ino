@@ -1,5 +1,6 @@
-#include "CD4017.hpp"
+#include "AiringTimer.hpp"
 #include "Beeper.hpp"
+#include "CD4017.hpp"
 
 #define COUNTER_CLOCK_PIN 3
 #define COUNTER_RESET_PIN 4
@@ -9,6 +10,7 @@ constexpr bool use_serial = false;
 
 CD4017 counter(COUNTER_CLOCK_PIN, COUNTER_RESET_PIN);
 Beeper beeper(BEEPER_PIN, 100, 250);
+AiringTimer airing_timer(counter, 2000);
 
 void setup() {
   if (use_serial) {
@@ -19,7 +21,7 @@ void setup() {
 
   counter.initialize();
   beeper.initialize();
-  beeper.start();
+  airing_timer.start();
 }
 
 // the loop function runs over and over again forever
@@ -29,9 +31,22 @@ void loop() {
   }
   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 
-  beeper.update();
+  if (airing_timer.is_complete()) {
+    if (use_serial) {
+      Serial.println("COMPLETE");
+    }
+    airing_timer.stop();
+    beeper.start();
+  } else if (airing_timer.is_working()) {
+    if (use_serial) {
+      Serial.println("UPDATE");
+    }
+    airing_timer.update();
+  } else {
+    beeper.update();
+  }
 
-  if (millis() > 2000) {
+  if (millis() > 5000) {
     beeper.stop();
   }
 }
