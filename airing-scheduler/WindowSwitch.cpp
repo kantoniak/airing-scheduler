@@ -5,7 +5,8 @@ WindowSwitch::WindowSwitch(uint8_t switch_pin) noexcept : switch_pin(switch_pin)
 
 void WindowSwitch::initialize() noexcept {
     pinMode(this->switch_pin, INPUT_PULLUP);
-    this->open = !digitalRead(this->switch_pin);
+    this->change_flag = true;
+    this->update();
 }
 
 void WindowSwitch::handle_interrupt() noexcept {
@@ -18,7 +19,7 @@ bool WindowSwitch::update() noexcept {
     }
 
     this->change_flag = false;
-    this->open = !digitalRead(this->switch_pin);
+    this->open = digitalRead(this->switch_pin);
     return true;
 }
 
