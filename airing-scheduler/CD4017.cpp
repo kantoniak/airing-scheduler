@@ -1,7 +1,7 @@
 #include "CD4017.hpp"
 
 #define PULSE_DURATION 1
-#define MAX_VALUE 3
+#define MAX_VALUE 9
 
 CD4017::CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin) : value(0), clock_pin(clock_pin), reset_pin(reset_pin), vcc_pin(vcc_pin) {
 }
