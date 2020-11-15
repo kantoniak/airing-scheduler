@@ -8,12 +8,12 @@
 
 class WindowSwitch {
   public:
-    WindowSwitch(uint8_t switch_pin) noexcept;
-    void initialize() noexcept;
-    void handle_interrupt() noexcept;
+    WindowSwitch(uint8_t switch_pin);
+    void initialize();
+    void handle_interrupt();
 
-    bool update() noexcept;
-    bool is_open() const noexcept;
+    bool update();
+    bool is_open() const;
 
   private:
     uint8_t switch_pin;

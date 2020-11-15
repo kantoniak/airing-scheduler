@@ -8,17 +8,17 @@
 
 class CD4017 {
   public:
-    CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin) noexcept;
-    void initialize() const noexcept;
+    CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin);
+    void initialize();
 
-    void turn_on() noexcept;
-    void turn_off() noexcept;
+    void turn_on();
+    void turn_off();
 
-    void increment() noexcept;
-    uint8_t get_value() const noexcept;
-    uint8_t get_max_value() const noexcept;
-    void set_value(uint8_t value) noexcept;
-    void reset() noexcept;
+    void increment();
+    uint8_t get_value() const;
+    uint8_t get_max_value() const;
+    void set_value(uint8_t value);
+    void reset();
 
   private:
     uint8_t clock_pin;
@@ -28,7 +28,7 @@ class CD4017 {
 
     bool power_on;
 
-    void send_pulse(uint8_t pin) const noexcept;
+    void send_pulse(uint8_t pin) const;
 };
 
 #endif

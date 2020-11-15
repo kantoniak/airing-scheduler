@@ -9,14 +9,14 @@
 
 class AiringTimer {
   public:
-    AiringTimer(CD4017& cd4017, const size_t airing_time) noexcept;
+    AiringTimer(CD4017& cd4017, const size_t airing_time);
 
-    void start() noexcept;
-    void update() noexcept;
-    void stop() noexcept;
+    void start();
+    void update();
+    void stop();
 
-    bool is_working() const noexcept;
-    bool is_complete() const noexcept;
+    bool is_working() const;
+    bool is_complete() const;
 
   private:
     Timer<1, millis, AiringTimer*> timer;
@@ -25,7 +25,7 @@ class AiringTimer {
     bool working;
     bool complete;
 
-    static bool timer_update(AiringTimer*) noexcept;
+    static bool timer_update(AiringTimer*);
 };
 
 #endif

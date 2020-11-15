@@ -1,33 +1,33 @@
 #include "Beeper.hpp"
 
-constexpr size_t BEEP_FREQ = 100;
+#define BEEP_FREQ 100
 
-Beeper::Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time) noexcept : pin(pin), beep_time(beep_time), total_time(total_time) {
+Beeper::Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time) : pin(pin), beep_time(beep_time), total_time(total_time) {
 }
 
-void Beeper::initialize() const noexcept {
+void Beeper::initialize() {
     pinMode(this->pin, OUTPUT);
     this->stop();
 }
 
-void Beeper::start() noexcept {
+void Beeper::start() {
     timer.every(total_time, Beeper::timer_beep, this);
 }
 
-void Beeper::update() noexcept {
+void Beeper::update() {
     this->timer.tick<void>();
 }
 
-void Beeper::stop() noexcept {
+void Beeper::stop() {
     timer.cancel();
     noTone(this->pin);
 }
 
-static bool Beeper::timer_beep(Beeper* beeper) noexcept {
+bool Beeper::timer_beep(Beeper* beeper) {
     beeper->beep();
     return true;
 }
 
-void Beeper::beep() noexcept {
+void Beeper::beep() {
     tone(this->pin, BEEP_FREQ, this->beep_time);
 }

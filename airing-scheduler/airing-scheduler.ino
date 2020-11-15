@@ -5,12 +5,26 @@
 #include "sleep.hpp"
 
 #define _DEBUG
+#define ATTINY85
 
-#define SWITCH_PIN 2
-#define COUNTER_CLOCK_PIN 3
-#define COUNTER_RESET_PIN 4
-#define COUNTER_VCC_PIN 6
-#define BEEPER_PIN 5
+#ifdef ATTINY85
+  #define SWITCH_PIN 2
+  #define SWITCH_INT 0
+  #define COUNTER_CLOCK_PIN 0
+  #define COUNTER_RESET_PIN 1
+  #define COUNTER_VCC_PIN 3
+  #define BEEPER_PIN 4
+  #define ATTINY85_WINDOW_SLEEP_TIME 1000
+#endif
+
+#ifdef ARDUINO_NANO
+  #define SWITCH_PIN 2
+  #define SWITCH_INT 0
+  #define COUNTER_CLOCK_PIN 3
+  #define COUNTER_RESET_PIN 4
+  #define COUNTER_VCC_PIN 6
+  #define BEEPER_PIN 5
+#endif
 
 #define COUNTDOWN_TIME 2000
 #define COUNTING_DELAY 250
@@ -73,7 +87,7 @@ void setup() {
   counter.initialize();
   beeper.initialize();
 
-  attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), on_switch, CHANGE);
+  attachInterrupt(SWITCH_INT, on_switch, CHANGE);
 
   // Initially set WAITING state and trigger update
   to_waiting();
@@ -85,7 +99,12 @@ void loop() {
       if (window_switch.update() && window_switch.is_open()) {
         from_waiting_to_counting();
       } else {
+        #ifdef ARDUINO_NANO
         system_sleep();
+        #endif
+        #ifdef ATTINY85
+        delay(ATTINY85_WINDOW_SLEEP_TIME);
+        #endif
       }
       break;
     }

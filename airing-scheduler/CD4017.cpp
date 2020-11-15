@@ -1,12 +1,12 @@
 #include "CD4017.hpp"
 
-constexpr size_t PULSE_DURATION = 1; // Microseconds
-constexpr size_t MAX_VALUE = 3;
+#define PULSE_DURATION 1
+#define MAX_VALUE 3
 
-CD4017::CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin) noexcept : value(0), clock_pin(clock_pin), reset_pin(reset_pin), vcc_pin(vcc_pin) {
+CD4017::CD4017(uint8_t clock_pin, uint8_t reset_pin, uint8_t vcc_pin) : value(0), clock_pin(clock_pin), reset_pin(reset_pin), vcc_pin(vcc_pin) {
 }
 
-void CD4017::initialize() const noexcept {
+void CD4017::initialize() {
     pinMode(this->clock_pin, OUTPUT);
     pinMode(this->reset_pin, OUTPUT);
     pinMode(this->vcc_pin, OUTPUT);
@@ -16,19 +16,19 @@ void CD4017::initialize() const noexcept {
     this->reset();
 }
 
-void CD4017::turn_on() noexcept {
+void CD4017::turn_on() {
     digitalWrite(this->vcc_pin, HIGH);
     this->power_on = true;
     this->reset();
 }
 
-void CD4017::turn_off() noexcept {
+void CD4017::turn_off() {
     digitalWrite(this->vcc_pin, LOW);
     this->power_on = false;
     this->value = 0;
 }
 
-void CD4017::increment() noexcept {
+void CD4017::increment() {
     if (!this->power_on) {
         return;
     }
@@ -41,15 +41,15 @@ void CD4017::increment() noexcept {
     }
 }
 
-uint8_t CD4017::get_value() const noexcept {
+uint8_t CD4017::get_value() const {
     return this->value;
 }
 
-uint8_t CD4017::get_max_value() const noexcept {
+uint8_t CD4017::get_max_value() const {
     return MAX_VALUE;
 }
 
-void CD4017::set_value(uint8_t value) noexcept {
+void CD4017::set_value(uint8_t value) {
     if (!this->power_on) {
         return;
     }
@@ -67,7 +67,7 @@ void CD4017::set_value(uint8_t value) noexcept {
     }
 }
 
-void CD4017::reset() noexcept {
+void CD4017::reset() {
     if (!this->power_on) {
         return;
     }
@@ -76,7 +76,7 @@ void CD4017::reset() noexcept {
     this->value = 0;
 }
 
-void CD4017::send_pulse(uint8_t pin) const noexcept {
+void CD4017::send_pulse(uint8_t pin) const {
     digitalWrite(pin, HIGH);
     delayMicroseconds(PULSE_DURATION);
     digitalWrite(pin, LOW);

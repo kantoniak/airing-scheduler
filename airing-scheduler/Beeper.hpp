@@ -9,12 +9,12 @@
 
 class Beeper {
   public:
-    Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time) noexcept;
-    void initialize() const noexcept;
+    Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time);
+    void initialize();
 
-    void start() noexcept;
-    void update() noexcept;
-    void stop() noexcept;
+    void start();
+    void update();
+    void stop();
 
   private:
     Timer<1, millis, Beeper*> timer;
@@ -22,8 +22,8 @@ class Beeper {
     unsigned long beep_time;
     unsigned long total_time;
 
-    static bool timer_beep(Beeper*) noexcept;
-    void beep() noexcept;
+    static bool timer_beep(Beeper*);
+    void beep();
 };
 
 #endif
