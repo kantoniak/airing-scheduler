@@ -1,6 +1,6 @@
 #include "AiringTimer.hpp"
 
-AiringTimer::AiringTimer(CD4017& cd4017, const size_t airing_time) : cd4017(cd4017), airing_time(airing_time) {
+AiringTimer::AiringTimer(CD4017& cd4017, const unsigned long airing_time) : cd4017(cd4017), airing_time(airing_time) {
 }
 
 void AiringTimer::start() {
@@ -9,7 +9,7 @@ void AiringTimer::start() {
     this->working = true;
 
     // Set timer to count upwards
-    const size_t update_delta = (airing_time / this->cd4017.get_max_value()) + 1;
+    const unsigned long update_delta = (airing_time / this->cd4017.get_max_value()) + 1;
     this->timer.every(update_delta, AiringTimer::timer_update, this);
 }
 

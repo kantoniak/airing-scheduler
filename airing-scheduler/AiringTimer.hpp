@@ -9,7 +9,7 @@
 
 class AiringTimer {
   public:
-    AiringTimer(CD4017& cd4017, const size_t airing_time);
+    AiringTimer(CD4017& cd4017, const unsigned long airing_time);
 
     void start();
     void update();
@@ -21,7 +21,7 @@ class AiringTimer {
   private:
     Timer<1, millis, AiringTimer*> timer;
     CD4017& cd4017;
-    const size_t airing_time;
+    const unsigned long airing_time;
     bool working;
     bool complete;
 
