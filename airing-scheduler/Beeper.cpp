@@ -1,6 +1,6 @@
 #include "Beeper.hpp"
 
-#define BEEP_FREQ 100
+#define BEEP_FREQ 3000
 
 Beeper::Beeper(uint8_t pin, unsigned long beep_time, unsigned long total_time) : pin(pin), beep_time(beep_time), total_time(total_time) {
 }

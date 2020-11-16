@@ -4,7 +4,7 @@
 #include "WindowSwitch.hpp"
 #include "sleep.hpp"
 
-#define _DEBUG
+#undef _DEBUG
 #define ATTINY85
 
 #ifdef ATTINY85
@@ -26,11 +26,11 @@
   #define BEEPER_PIN 5
 #endif
 
-#define COUNTDOWN_TIME 2000
-#define COUNTING_DELAY 250
+#define COUNTDOWN_TIME (15 * 60 * 1000UL)
+#define COUNTING_DELAY (15 * 1000UL)
 #define BEEPER_BEEP_LENGTH 100
 #define BEEPER_TOTAL_LENGTH 250
-#define BEEPING_DELAY 25
+#define BEEPING_DELAY 30
 
 enum State {
   WAITING = 0,
@@ -98,6 +98,7 @@ void loop() {
     case WAITING: {
       if (window_switch.update() && window_switch.is_open()) {
         from_waiting_to_counting();
+        break;
       } else {
         #ifdef ARDUINO_NANO
         system_sleep();
@@ -118,6 +119,7 @@ void loop() {
       airing_timer.update();
       if (airing_timer.is_complete()) {
         from_counting_to_alterting();
+        break;
       }
 
       delay(COUNTING_DELAY);
